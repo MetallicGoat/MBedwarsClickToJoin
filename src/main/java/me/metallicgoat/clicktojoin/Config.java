@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Config {
 
-  public static int message_cooldown = 5;
-  // public static int min_time_to_wait = 10; TODO
+  public static int message_cooldown = 60;
+  public static int arena_min_time_remaining = 8;
   public static List<String> worlds_whitelist = new ArrayList<>();
   public static boolean resend_new_click_to_join_on_fail = false;
   public static ArenaConditionGroup arena_condition;
@@ -49,14 +49,16 @@ public class Config {
     }
 
 
-    message_cooldown = config.getInt("message_cooldown", 60);
+    message_cooldown = config.getInt("message-cooldown", message_cooldown);
+    arena_min_time_remaining = config.getInt("arena-min-time-remaining", arena_min_time_remaining);
 
-    final List<String> worlds_whitelist_config = config.getStringList("worlds_whitelist");
+    final List<String> worlds_whitelist_config = config.getStringList("worlds-whitelist");
 
     if (worlds_whitelist_config != null)
       worlds_whitelist = worlds_whitelist_config;
 
-    arena_condition_string = config.getString("arena_condition_string", arena_condition_string);
+    arena_condition_string = config.getString("arena-condition", arena_condition_string);
+    resend_new_click_to_join_on_fail = config.getBoolean("resend-new-click-to-join-on-fail", resend_new_click_to_join_on_fail);
 
     if (arena_condition_string != null && !arena_condition_string.isEmpty()) {
       try {
@@ -92,20 +94,26 @@ public class Config {
 
     config.addEmptyLine();
 
+    config.addComment("How many seconds need to be left in lobby for a click to join message to be sent.");
+    config.addComment("Prevents messages from being sent if the player will not even be able to click in time.");
+    config.set("arena-min-time-remaining", arena_min_time_remaining);
+
+    config.addEmptyLine();
+
     config.addComment("Click To Join messages will only be sent in these world.");
     config.addComment("Leave this empty to enable all worlds.");
-    config.set("worlds_whitelist", worlds_whitelist);
+    config.set("worlds-whitelist", worlds_whitelist);
 
     config.addEmptyLine();
 
     config.addComment("Resends a new click to join message if a players clicks on an arena that is already full.");
-    config.set("resend_new_click_to_join_on_fail", resend_new_click_to_join_on_fail);
+    config.set("resend-new-click-to-join-on-fail", resend_new_click_to_join_on_fail);
 
     config.addEmptyLine();
 
     config.addComment("The condition that specifies what arenas support Click To Join.");
     config.addComment("Leave this blank for all arenas.");
-    config.set("arena_condition", arena_condition_string);
+    config.set("arena-condition", arena_condition_string);
 
     config.save(new File(ClickToJoinPlugin.getAddon().getDataFolder(), "config.yml"));
   }
