@@ -1,0 +1,7 @@
+version: 0.0.1
+name: MBedwarsClickToJoin
+author: MetallicGoat
+main: me.metallicgoat.clicktojoin.ClickToJoinPlugin
+api-version: 1.13
+description: Click to join addon for MBedwars
+depend: [MBedwars]
