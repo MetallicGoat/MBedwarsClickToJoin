@@ -7,8 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ClickToJoinPlugin extends JavaPlugin {
 
-  public static final int MIN_MBEDWARS_API_VER = 106;
-  public static final String MIN_MBEDWARS_VER_NAME = "5.4.9";
+  public static final int MIN_MBEDWARS_API_VER = 113;
+  public static final String MIN_MBEDWARS_VER_NAME = "5.4.14";
 
   @Getter
   private static ClickToJoinPlugin instance;
